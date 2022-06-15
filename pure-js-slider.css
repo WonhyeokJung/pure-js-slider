@@ -1,0 +1,367 @@
+:root {
+  color-scheme: dark;
+  --slider-width: 1200px;
+  /* height 알아서 너비에 맞게 늘어나지만, 필요한 경우 설정*/
+  --slider-height: calc(var(--slider-width) * (3 / 4));
+  --slider-min-width: 300px;
+  --slider-max-width: 100vw;
+  --slider-max-height: calc(var(--slider-max-width) * (3 / 4));
+  --slider-pagination-dot-width: 10px;
+  --slider-pagination-dot-height: 10px;
+  --slider-pagination-dot-inactive-color: rgb(255,255,255);
+  --slider-pagination-dot-inactive-opacity: 0.75;
+}
+
+.slider.slider-default-size {
+  width: var(--slider-width) !important;
+  aspect-ratio: 4 / 3;
+}
+
+.slider {
+  position: relative;
+  /* width: var(--slider-width);
+  height: var(--slider-height); */
+  left: 50%;
+  /* 이미지 사이즈 조절 */
+  /* min-width: var(--slider-min-width); */
+  max-width: var(--slider-max-width);
+  max-height: var(--slider-max-height);
+  border-radius: 5px;
+  overflow: hidden;
+  transform: translate(-50%);
+}
+
+.slider-wrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* 이미지 세로 높이 자동 조절용 */
+  /* align-items: center; */
+  /* position: relative; */
+  /* flex-direction: column; */
+  cursor: grab;
+  transition: transform 0ms ease;
+  /* box-sizing: content-box; */
+}
+
+.slider-wrapper.horizontal {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.slider-wrapper.vertical {
+  flex-direction: column;
+  transform: translate3d(0, -100%, 0);
+}
+
+.slider-slide {
+  position: relative;
+  /* control horizontal. 없으면 width 지멋대로 변함 */
+  min-width: 100%;
+  /* control vertical */
+  min-height: 100%;
+  border-radius: 5px;
+  /* image flickering 방지 */
+  backface-visibility: hidden;
+  /* height는 자동조절되므로 정렬 필요없음. */
+}
+
+.slider-slide img {
+  /* max-width: 100% height: 100% or width: 100% max-height: 100% 정렬없이 좌측 혹은 상측에 사진 붙이고 비율에 맞게 div 안으로*/
+  /* 
+    max-width의 개선방식은 object-fit: contain; width: 100%; height: 100%;
+    대체 콘텐츠의 가로세로비를 유지하면서, 요소의 콘텐츠 박스 내부에 들어가도록 크기를 맞춤 조절
+    이미지의 크기가 맞지 않을 경우 letterbox화 된다.
+  */
+  /* object-fit:cover; width: 100%; height: 100%의 경우 비율맞춰 사진 중앙 정렬 후 넘치는 것은 자른다. */
+  /* width: 100% height: 100%는 비율 깨고 컨테이너에 꽉차게 */
+  /* display: block; */
+  width:100%;
+  height:100%;
+  border-radius: 5px;
+  backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+  object-fit: cover;
+}
+
+/* .slider-active {
+  animation-name: slideIn;
+  animation-duration: 300ms;
+  animation-iteration-count: infinite;
+} */
+
+[class^='slider-arrow'] {
+  border: none;
+  /* border-radius: 50%; */
+  font: bold 3rem sans-serif;
+  color: rgb(255,255,255); 
+  z-index: 2;
+  cursor: pointer;
+  background: none;
+  /* background-color: black; */
+  /* animation-name: fadeOut; */
+  animation-duration: 10s;
+  animation-fill-mode: forwards;
+  /* after위치조절 */
+  vertical-align: middle;
+  /* 블록 방지 */
+  user-select: none;
+}
+
+[class^='slider-arrow']:hover {
+  animation: fadeIn 0s 1 0s;
+}
+
+.slider-arrow__prev {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.slider-arrow-horizontal__prev {
+  top: 50%;
+  left: 5%;
+}
+.slider-arrow-horizontal__prev::after {
+  content: '<';
+}
+
+.slider-arrow-vertical__prev {
+  top: 5%;
+  left: 50%;
+}
+
+/* .slider-arrow-vertical__prev::after {
+  content: '∧';
+} */
+
+/* 아이콘에 이미지 사용시 vertical에서 90도 회전 */
+.slider-arrow-vertical__prev * {
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-end; 
+  height: 50px; 
+  transform: rotate(90deg);
+}
+
+.slider-arrow__next {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.slider-arrow-horizontal__next {
+  top: 50%;
+  left: 95%;
+}
+
+.slider-arrow-horizontal__next::after {
+  content: '>';
+}
+
+.slider-arrow-vertical__next {
+  top: 95%;
+  left: 50%;
+}
+
+/* .slider-arrow-vertical__next::after {
+  content: '∨';
+} */
+
+.slider-arrow-vertical__next * {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  height: 50px; 
+  transform: rotate(90deg);
+}
+
+.slider-arrow-no-after::after {
+  content: none;
+}
+
+div.slider-page-number {
+  position: relative;
+  margin: 0px auto;
+}
+
+.slider-page-number__content {
+  display: flex;
+  white-space: nowrap;
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
+  width: 50px;
+  height: 20px;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.15);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+/* @keyframes slideIn {
+  from {
+    transform: translateX(-300%);
+  }
+  to {
+    transform: translateX(-700%);
+  }
+} */
+
+.slider-pagination {
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  /* 기존삭제 */
+  /* white-space: nowrap; */
+  /* width: 90px; */
+  /* 기존삭제끝 */
+  /* 새로추가 */
+  /* width: 100%; */
+  text-align: center;
+  /* 새로추가끝 */
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.slider-pagination-vertical {
+  display: flex;
+  flex-direction: column;
+  /* 좌측배치 */
+  /* flex-wrap: wrap; */
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  /* 좌측배치 */
+  /* left: 5%; */
+  left: 95%;
+  bottom: 50%;
+  height: 80%;
+  overflow: visible;
+  transform: translate(-50%, 50%);
+}
+
+.slider-pagination__dot {
+  display: inline-block;
+  width: var(--slider-pagination-dot-width);
+  height: var(--slider-pagination-dot-height);
+  margin: 4px 4px;
+  border-radius: 50%;
+  background: var(--slider-pagination-dot-inactive-color);
+  opacity: var(--slider-pagination-dot-inactive-opacity);
+  transform: scale(0.9);
+}
+
+.slider-pagination__dot--active {
+  background-color: skyblue;
+  opacity: 1;
+}
+
+.slider-pagination__dot--click {
+  cursor: pointer;
+}
+
+.slider-pagination-dynamic__dot {
+  /* width, height적용 */
+  display: inline-block;
+  /* left적용위함 */
+  position: relative;
+  left: 36px;
+  width: var(--slider-pagination-dot-width);
+  height: var(--slider-pagination-dot-height);
+  margin: 0px 4px;
+  border-radius: 50%;
+  background: var(--slider-pagination-dot-inactive-color);
+  /* cursor: pointer; */
+  opacity: var(--slider-pagination-dot-inactive-opacity);
+  transform: scale(0.50);
+  transition: .2s transform, .1s left;
+}
+
+.slider-pagination-dynamic__dot--prev--prev {
+  transform: scale(.50);
+}
+
+.slider-pagination-dynamic__dot--prev {
+  transform: scale(.75);
+}
+
+.slider-pagination-dynamic__dot--active {
+  background-color: skyblue;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slider-pagination-dynamic__dot--next {
+  transform: scale(.75);
+}
+
+.slider-pagination-dynamic__dot--next--next {
+  transform: scale(.50);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }  
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media only screen and (max-width:600px) {
+  .slider {
+    font-size: 0.5rem;
+  }
+  [class^='slider-arrow'] {
+    font-size: 2rem;
+  }
+}
+
+/* touch시 slider-arrow hide */
+/* @media (pointer:coarse) {
+  [class^='slider-arrow'] {
+    visibility: hidden;
+  }
+} */
+
+/* settings */
+.slider-setting {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+.slider-setting--hide {
+  /* reflow */
+  display: none;
+  /* repaint */
+  visibility: hidden;
+  /* best option */
+  z-index: 0;
+}
+
+.slider-setting-list {
+  font-size: 0.8em;
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+p {
+  font-size: 0.6em;
+  margin: 5px 0;
+}
+
+
+.disable {
+  visibility: hidden;
+  /* z-index: -1; */
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pure-js-slider-local.css">
+  <title>PureJsSlider</title>
+</head>
+<body>
+  <div style="text-align: center;">본 파일은 로컬에서 테스트가 가능하도록 하기 위해 <b>Script Type</b>이 변경되어 있습니다. <br /> 따라서 실제 버전과는 차이가 있을 수 있습니다.<br />서버를 이용한 module 버전의 이용을 원하시는 경우, pure-js-slider-final을 사용해주세요. 감사합니다.<br /><br /></div>
+  <div class="slider">
+    <div class="slider-wrapper">
+      <div class="slider-slide"><p style="position: absolute; right: 2%; font-size: 0.95em; font-weight: bold;">Photo by <a style="font-weight: bold; color: rgb(37, 219, 37); text-decoration: none;" href="https://unsplash.com/@alexandermils">Alexander Mils</a></p><img src="./assets/red.jpg" alt="" loading="lazy"></div>
+      <div class="slider-slide"><p style="position: absolute; right: 2%; font-size: 0.95em; font-weight: bold;">Photo by <a style="font-weight: bold; color: skyblue; text-decoration: none;" href="https://unsplash.com/@aznbokchoy">Lucas Kapla</a></p><img src="./assets/orange.jpg" alt="" loading="lazy"></div>
+      <div class="slider-slide"><p style="position: absolute; right: 2%; font-size: 0.95em; font-weight: bold;">Photo by <a style="font-weight: bold; color: purple; text-decoration: none;" href="https://unsplash.com/@picsbyjameslee">James Lee</a></p><img src="./assets/yellow.jpg" alt="" loading="lazy"></div>
+      <div class="slider-slide"><p style="position: absolute; right: 2%; font-size: 0.95em; font-weight: bold;">Photo by <a style="font-weight: bold; color: magenta; text-decoration: none;" href="https://unsplash.com/@janke">Janke Laskowski</a></p><img src="./assets/green.jpg" alt=""></div>
+      <div class="slider-slide"><p style="position: absolute; right: 2%; font-size: 0.95em; font-weight: bold;">Photo by <a style="font-weight: bold; color: orange; text-decoration: none;" href="https://unsplash.com/@aboodi_vm">aboodi vesakaran</a></p><img src="./assets/skyblue.jpg" alt=""></div>
+      <div class="slider-slide"><p style="position: absolute; right: 2%; font-size: 0.95em; font-weight: bold;">Photo by <a style="font-weight: bold; color: yellow; text-decoration: none;" href="https://unsplash.com/@ksushlapush">Kseniya Lapteva</a></p><img src="./assets/navyblue.jpg" alt=""></div>
+      <div class="slider-slide"><p style="position: absolute; right: 2%; font-size: 0.95em; font-weight: bold;">Photo by <a style="font-weight: bold; color: greenyellow; text-decoration: none;" href="https://unsplash.com/@yogidan2012">Daniele Levis Pelusi</a></p><img src="./assets/purple.jpg" alt=""></div>
+    </div>
+    <div class="slider-arrow__prev"></div>
+    <div class="slider-arrow__next"></div>
+    <div class="slider-pagination"></div>
+    <div class="slider-page-number"></div>
+  </div>
+  <script src="./pure-js-slider-local.js"></script>
+  <script>
+    const mySlider = new PureJsSlider ('.slider', {
+      init: true,
+      direction: 'vertical',
+      useArrow: {
+        enabled: true,
+        followDirection: true,
+      },
+      userSetting: false,
+      autoplay: {
+        enabled: true,
+        delay: 3000,
+        toForward: true,
+        pauseOnInteraction: true,
+      },
+      touchMove: {
+        enabled: false,
+      },
+      pointerMove: {
+        enabled: true,
+      },
+      usePagination: {
+        enabled: true,
+        clickable: true,
+        followDirection: true,
+      },
+      usePageNumber: {
+        enabled: true,
+      },
+      width: '',
+      height: '',
+      transitionSpeed: 500,
+    });
+  </script>
+</body>
+</html>
